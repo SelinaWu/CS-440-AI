@@ -1,0 +1,50 @@
+def bfs(ls, start):
+    # 'start' is the index; int(start/column) is the row number; start%column-1 is the column number
+    # ls[int(start/column)][start%column-1] = 'P'
+    stack=[start]
+    node_checked = 0
+    while stack:
+        ind=stack.pop(0)
+        #calculate row as 'r', column as 'c', find current content use ls[r][c]
+        r=int(ind/column)
+        c=ind%column-1
+        cur=ls[r][c]
+        if cur != '%' and cur != 'V':
+            if cur is '.':
+                break
+            #print(r,',',c,ls[r][c])
+            ls[r][c]='V'
+            #print(r,',',c,ls[r][c])
+            # right
+            if (c+1)<column:
+                if ls[r][c+1] != 'V' and ls[r][c+1] != '%':
+                    temp=ind+1                  
+                    mazeMap[temp]=ind
+                    #print(r,',',c+1,ls[r][c+1])
+                    stack.append(temp)
+                    node_checked += 1
+            # left
+            if (c-1)>=0:
+                if ls[r][c-1] != 'V' and ls[r][c-1] != '%':
+                    temp=ind-1                    
+                    mazeMap[temp]=ind
+                    #print(r,',',c-1,ls[r][c-1])
+                    stack.append(temp)
+                    node_checked += 1
+            # down
+            if (r+1)<row:
+                if ls[r+1][c] != 'V' and ls[r+1][c] != '%':
+                    temp=ind+column
+                    mazeMap[temp]=ind
+                    #print(r+1,',',c,ls[r+1][c])
+                    stack.append(temp)
+                    node_checked += 1
+            # up
+            if (r-1)>=0:
+                if ls[r-1][c] != 'V' and ls[r-1][c] != '%':
+                    temp=ind-column
+                    mazeMap[temp]=ind
+                    #print(r-1,',',c,ls[r-1][c])
+                    stack.append(temp)
+                    node_checked += 1
+    print("Total node checked: ", node_checked)       
